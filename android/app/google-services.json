@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218516676587",
+    "firebase_url": "https://reconnect-c1927.firebaseio.com",
+    "project_id": "reconnect-c1927",
+    "storage_bucket": "reconnect-c1927.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218516676587:android:249666a47e243fa41a43ae",
+        "android_client_info": {
+          "package_name": "com.yashwant.reconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218516676587-nal9opmuedh3cqj568mlo334p6v3raqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPSzppurymkimyTMHojb93BkhFQqMC7TI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218516676587-nal9opmuedh3cqj568mlo334p6v3raqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
