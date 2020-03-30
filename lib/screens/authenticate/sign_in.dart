@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reconnect/screens/authenticate/register.dart';
 import 'package:reconnect/services/auth.dart';
+import 'package:reconnect/shared/constants.dart';
+import 'package:reconnect/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -15,6 +17,7 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String email = "";
@@ -23,7 +26,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -44,11 +47,13 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 10,),
               TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'email'),
                 validator: (val) => val.isEmpty ? "Enter an email" : null,
                 onChanged: (val) {setState(() => email = val);},
               ),
               SizedBox(height: 10,),
               TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'password'),
                 validator: (val) => val.length < 6 ? "Enter a longer password" : null,
                 obscureText:true,
                 onChanged: (val) {setState(() => password = val);},),
@@ -60,11 +65,13 @@ class _SignInState extends State<SignIn> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
+                  setState(() => loading = true);
                   if(_formKey.currentState.validate()) {
                     print("sign in form validation successfull");
                     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                     if(result == null){
                       setState(() {
+                        loading = false;
                         error = "SignIn failded from firebase side";
                       });
                     }
