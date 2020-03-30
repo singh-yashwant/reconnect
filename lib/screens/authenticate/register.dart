@@ -73,6 +73,11 @@ class _RegisterState extends State<Register> {
 									}
 								},
 							),
+							SizedBox(height: 20,),
+							Text(
+								error,
+								style: TextStyle(color: Colors.red, fontSize: 14),
+							),
 						],
 					),
 				),
