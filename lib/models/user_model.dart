@@ -1,16 +1,13 @@
 class User {
-	final int id;
-	final String name;
-	final String imageUrl;
+//	final String name;
+//	final String imageUrl;
 
-	String uid;
-	String school;
-	String college;
+	final String uid;
+//	final String school;
+//	final String college;
 
 	User({
-		this.id,
-		this.name,
-		this.imageUrl,
+		this.uid,
 	});
 
 }
