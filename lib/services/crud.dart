@@ -10,6 +10,13 @@ class CrudMethods {
 		return FirebaseAuth.instance.currentUser() == null ? false : true;
 	}
 
+	// fetch all user details to create custom user object
+
+	Future getUserDetails(String uid) async {
+		var doc = await db.collection("users").document(uid).get();
+		return doc.data;
+	}
+
 	// create a entry in firestore users db
 	Future createEntryInUsersCollection(FirebaseUser user, String email,
 			String password, String name,

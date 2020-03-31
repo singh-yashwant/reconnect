@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:reconnect/services/auth.dart';
+import 'package:reconnect/shared/navbar.dart';
 
 class Home extends StatelessWidget {
 
-	final AuthService _auth = AuthService();
 
 	@override
   Widget build(BuildContext context) {
@@ -14,13 +15,29 @@ class Home extends StatelessWidget {
 				backgroundColor: Colors.brown[500],
 				elevation: 0.0,
 				actions: <Widget>[
-					FlatButton.icon(
-							onPressed: () async{
-								await _auth.signOut();
-							},
-							icon: Icon(Icons.person),
-							label: Text("log out"))
+
 				],
+			),
+			drawer: NavDrawer(),
+			body: Center(
+				child:Column(
+					children: <Widget>[
+						SizedBox(height: 100,),
+						RaisedButton(
+							onPressed: () {},
+							color: Colors.brown[300],
+							highlightColor: Colors.brown[100],
+							child: Text("College chat room"),
+						),
+						SizedBox(height: 30,),
+						RaisedButton(
+							onPressed: () {},
+							color: Colors.brown[300],
+							highlightColor: Colors.brown[100],
+							child: Text("School chat room"),
+						),
+					],
+				) ,
 			),
 		);
   }
