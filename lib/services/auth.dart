@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:reconnect/models/user_model.dart';
+import 'package:reconnect/services/crud.dart';
 
 class AuthService {
 
 	final FirebaseAuth _auth = FirebaseAuth.instance;
 	final db = Firestore.instance;
+	final CrudMethods crud = CrudMethods();
 
 	// create user object from firebase user object
 	User _userFromFirebaseUser(FirebaseUser user) {
@@ -49,7 +51,8 @@ class AuthService {
 			AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
 			FirebaseUser user = result.user;
 
-			createEntryInUsersCollection(user, email, password, name, school, college, school_batch, college_batch);
+			crud.createEntryInUsersCollection(user, email, password, name, school, college, school_batch, college_batch);
+			crud.createEntryInSchoolsCollection(school, school_batch, user.uid);
 
 			return _userFromFirebaseUser(user);
 		}
@@ -67,28 +70,6 @@ class AuthService {
 		catch(e){
 			print(e.toString());
 			return null;
-		}
-	}
-
-	// create a entry in firestore users db
-	Future createEntryInUsersCollection(FirebaseUser user, String email, String password, String name,
-			String school, String college, String school_batch, String college_batch) async {
-
-		try {
-			await Firestore.instance.collection("users").document(user.uid.toString())
-					.setData({
-				"uid": user.uid.toString(),
-				"name": name,
-				"email": email,
-				"password": password,
-				"school": school,
-				"school_batch": school_batch,
-				"college": college,
-				"college": college_batch,
-			});
-		}catch(e){
-			print("------unable to write to firestore\n");
-			print(e);
 		}
 	}
 
