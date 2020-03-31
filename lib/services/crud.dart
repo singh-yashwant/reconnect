@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 class CrudMethods {
 
+	final db = Firestore.instance;
+
 	bool isLoggedIn(){
 		return FirebaseAuth.instance.currentUser() == null ? false : true;
 	}
@@ -33,25 +35,25 @@ class CrudMethods {
 
 
 	// create entry in schools database
-	Future createEntryInSchoolsCollection(String school, String school_batch,
+	Future createEntryInSchoolCollection(String school, String school_batch,
 			String uid) async {
 		try {
-			await Firestore.instance.collection("schools").document(school)
-					.collection("year").document(school_batch)
-					.updateData({
-				"users": {uid: true,},
-			});
-		}
-		on PlatformException {
-			print("platform exception handled");
-			await Firestore.instance.collection("schools").document(school)
-					.collection("year").document(school_batch)
-					.setData({
-				"users": {uid: true,},
-			});
-		}
-		catch (e) {
-			print("can't save data to school collection");
+			 DocumentReference school_users = await db
+					.collection("schools").document(school)
+					.collection(school_batch).document("users");
+
+			try {
+				await school_users.updateData({
+					uid: true,
+				});
+			}on PlatformException{
+				print("*****document dosen't exist so creating one*********");
+				await school_users.setData({
+					uid: true,
+				});
+			}
+		} catch (e) {
+			print("---------cant add data to school collection");
 			print(e.toString());
 		}
 	}
@@ -61,10 +63,40 @@ class CrudMethods {
 	Future createEntryInCollegeCollection(String college, String college_batch,
 			String uid) async {
 
+		try {
+			DocumentReference college_users = await db
+					.collection("colleges").document(college)
+					.collection(college_batch).document("users");
+
+			try {
+				await college_users.updateData({
+					uid: true,
+				});
+			}on PlatformException{
+				print("*****document dosen't exist so creating one*********");
+				await college_users.setData({
+					uid: true,
+				});
+			}
+
+		}catch(e){
+			print("---------cant add data to college collection");
+			print(e.toString());
+		}
+
+		// functions to create chatrooms
+
+
+		// create message entry function for school chatroom
+
+
+		// create message entry function for college chatroom
+
+
+		// create function to retrive messages form school chatroom
+
+
+		// create function to retrive messages from college chatroom
+
 	}
-
-// create message entry for school database
-
-
-// create message entry for college database
 }

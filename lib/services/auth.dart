@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:reconnect/models/user_model.dart';
 import 'package:reconnect/services/crud.dart';
@@ -6,7 +5,7 @@ import 'package:reconnect/services/crud.dart';
 class AuthService {
 
 	final FirebaseAuth _auth = FirebaseAuth.instance;
-	final db = Firestore.instance;
+
 	final CrudMethods crud = CrudMethods();
 
 	// create user object from firebase user object
@@ -52,7 +51,10 @@ class AuthService {
 			FirebaseUser user = result.user;
 
 			crud.createEntryInUsersCollection(user, email, password, name, school, college, school_batch, college_batch);
-			crud.createEntryInSchoolsCollection(school, school_batch, user.uid);
+			crud.createEntryInSchoolCollection(school, school_batch, user.uid);
+			crud.createEntryInCollegeCollection(college, college_batch, user.uid);
+
+			//call functions to create chatrooms
 
 			return _userFromFirebaseUser(user);
 		}
