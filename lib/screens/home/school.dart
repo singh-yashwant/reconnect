@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reconnect/shared/chatwidget.dart';
 import 'package:reconnect/shared/navbar.dart';
 
 class SchoolChatRoom extends StatefulWidget {
@@ -23,14 +24,11 @@ class _SchoolChatRoomState extends State<SchoolChatRoom> {
 					),
 				],
 			),
-			body: Center(
-				child: RaisedButton(
-					color: Colors.brown[300],
-					onPressed: () {},
-					child: Text("Do Nothing"),
-				),
-			),
 			drawer: NavDrawer(),
+			body: Container(
+				child: SchoolChatWidget(),
+			),
+
 
 		);
 	}

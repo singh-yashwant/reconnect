@@ -32,8 +32,9 @@ class CrudMethods {
 				"school": school,
 				"school_batch": school_batch,
 				"college": college,
-				"college": college_batch,
+				"college_batch": college_batch,
 			});
+
 		} catch (e) {
 			print("------unable to write to firestore\n");
 			print(e);
@@ -69,7 +70,6 @@ class CrudMethods {
 	// create entry in college database
 	Future createEntryInCollegeCollection(String college, String college_batch,
 			String uid) async {
-
 		try {
 			DocumentReference college_users = await db
 					.collection("colleges").document(college)
@@ -79,32 +79,41 @@ class CrudMethods {
 				await college_users.updateData({
 					uid: true,
 				});
-			}on PlatformException{
+			} on PlatformException {
 				print("*****document dosen't exist so creating one*********");
 				await college_users.setData({
 					uid: true,
 				});
 			}
-
-		}catch(e){
+		} catch (e) {
 			print("---------cant add data to college collection");
 			print(e.toString());
 		}
-
-		// functions to create chatrooms
-
-
-		// create message entry function for school chatroom
+	}
 
 
-		// create message entry function for college chatroom
+	// function to get name of chatrooms
+	Future getChatrooms(uid) async {
+		DocumentReference doc = await db.collection("users").document(uid);
+		print("*****************");
 
+//		String school = db.collection("users").document(FirebaseAuth.instance.currentUser().toString()).data['school'];
+		await print(doc.get());
+		print("*****************");
 
-		// create function to retrive messages form school chatroom
-
-
-		// create function to retrive messages from college chatroom
 
 	}
+
+	// functions to create chatrooms
+
+
+	// create function to retrive messages form school chatroom
+
+
+	// create function to retrive messages from college chatroom
+
+
+	// function to save messages in chatroom collection
+
 
 }
