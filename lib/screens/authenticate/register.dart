@@ -21,6 +21,11 @@ class _RegisterState extends State<Register> {
 	// text field state
 	String email = "";
 	String password = "";
+	String name = "";
+	String college = "";
+	String college_batch = "";
+	String school = "";
+	String school_batch = "";
 	String error = "";
 
 	@override
@@ -46,8 +51,39 @@ class _RegisterState extends State<Register> {
 						children: <Widget>[
 							SizedBox(height: 10,),
 							TextFormField(
+								decoration: textInputDecoration.copyWith(hintText: 'Name',),
+								validator: (val) => val.isEmpty ? "Enter a valid name" : null,
+								onChanged: (val) {setState(() => name = val);},
+							),
+							SizedBox(height: 10,),
+							TextFormField(
+								decoration: textInputDecoration.copyWith(hintText: 'college'),
+								validator: (val) => val.isEmpty ? "Enter a valid college name" : null,
+								onChanged: (val) {setState(() => college = val);},
+							),
+							SizedBox(height: 10,),
+							TextFormField(
+								decoration: textInputDecoration.copyWith(hintText: 'college grad year'),
+								validator: (val) => val.isEmpty ? "Enter a valid year" : null,
+								onChanged: (val) {setState(() => college_batch = val);},
+							),
+							SizedBox(height: 10,),
+							TextFormField(
+								decoration: textInputDecoration.copyWith(hintText: 'school name'),
+								validator: (val) => val.isEmpty ? "Enter a valid school name" : null,
+								onChanged: (val) {setState(() => school = val);},
+							),
+							SizedBox(height: 10,),
+							TextFormField(
+								decoration: textInputDecoration.copyWith(hintText: 'school grad year'),
+								validator: (val) => val.isEmpty ? "Enter a valid year" : null,
+								onChanged: (val) {setState(() => school_batch = val);},
+							),
+							SizedBox(height: 10,),
+							SizedBox(height: 10,),
+							TextFormField(
 								decoration: textInputDecoration.copyWith(hintText: 'email'),
-								validator: (val) => val.isEmpty ? "Enter an email" : null,
+								validator: (val) => val.isEmpty ? "Enter a valid email" : null,
 								onChanged: (val) {setState(() => email = val);},
 							),
 							SizedBox(height: 10,),
@@ -66,7 +102,8 @@ class _RegisterState extends State<Register> {
 								onPressed: () async {
 									setState(() => loading = true);
 									if(_formKey.currentState.validate()){
-										dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+										dynamic result = await _auth.registerWithEmailAndPassword(email, password, name, school,
+										college, school_batch, college_batch);
 										if(result == null){
 											setState(() {
 											  error = "Firebase validation failed";
@@ -77,6 +114,7 @@ class _RegisterState extends State<Register> {
 									}
 									else{
 										print("form validation faild");
+										setState(() => loading = false);
 									}
 								},
 							),
