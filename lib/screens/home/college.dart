@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:reconnect/services/crud.dart';
 import 'package:reconnect/shared/navbar.dart';
 
 class CollegeChatRoom extends StatefulWidget {
@@ -7,9 +9,22 @@ class CollegeChatRoom extends StatefulWidget {
 }
 
 class _CollegeChatRoomState extends State<CollegeChatRoom> {
+
+	final CrudMethods _crud = CrudMethods();
+	String _uid;
+	dynamic _userDetails;
+	String _collegeChatroom;   // rn college name is not there in the db, so using school
+
+	preporcessing() async{
+		_uid = await _crud.getUid();
+		_userDetails = await _crud.getUserDetails(_uid);
+		_collegeChatroom = _userDetails['school'] + _userDetails['school_batch'];
+	}
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    preporcessing();
+		return Scaffold(
 			appBar: AppBar(
 				backgroundColor: Colors.brown[400],
 				title: Text("college chat room"),
@@ -26,8 +41,10 @@ class _CollegeChatRoomState extends State<CollegeChatRoom> {
 			body: Center(
 				child: RaisedButton(
 					color: Colors.brown[300],
-					onPressed: () {},
-					child: Text("Do Nothing"),
+					onPressed: () {
+						print("\n*************\ncharoomId: " + _collegeChatroom);
+					},
+					child: Text("Debug button"),
 				),
 			),
 			drawer: NavDrawer(),

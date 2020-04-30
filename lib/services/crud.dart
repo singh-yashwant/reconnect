@@ -5,15 +5,22 @@ import 'package:flutter/services.dart';
 class CrudMethods {
 
 	final db = Firestore.instance;
+	final FirebaseAuth _auth = FirebaseAuth.instance;
 
 	bool isLoggedIn(){
 		return FirebaseAuth.instance.currentUser() == null ? false : true;
 	}
 
-	// fetch all user details to create custom user object
+	Future<String> getUid() async{
+		final FirebaseUser user = await _auth.currentUser();
+		final userid = user.uid;
+		return userid.toString();
+	}
 
-	Future getUserDetails(String uid) async {
+	// fetch all user details to create custom user object
+	Future<dynamic> getUserDetails(String uid) async {
 		var doc = await db.collection("users").document(uid).get();
+//		print(doc.data);
 		return doc.data;
 	}
 
