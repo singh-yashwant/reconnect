@@ -42,7 +42,7 @@ class _CollegeChatRoomState extends State<CollegeChatRoom> {
 				child: RaisedButton(
 					color: Colors.brown[300],
 					onPressed: () {
-						print("\n*************\ncharoomId: " + _collegeChatroom);
+						_crud.saveMessage("hello this is first text", _uid, _collegeChatroom);
 					},
 					child: Text("Debug button"),
 				),

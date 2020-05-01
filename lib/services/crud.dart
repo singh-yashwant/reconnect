@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CrudMethods {
 
 	final db = Firestore.instance;
 	final FirebaseAuth _auth = FirebaseAuth.instance;
+	final chatSize = 5;           // limit of messages we want to store in db
 
 	bool isLoggedIn(){
 		return FirebaseAuth.instance.currentUser() == null ? false : true;
@@ -99,18 +101,6 @@ class CrudMethods {
 	}
 
 
-	// function to get name of chatrooms
-	Future getChatrooms(uid) async {
-		DocumentReference doc = await db.collection("users").document(uid);
-		print("*****************");
-
-//		String school = db.collection("users").document(FirebaseAuth.instance.currentUser().toString()).data['school'];
-		await print(doc.get());
-		print("*****************");
-
-
-	}
-
 	// functions to create chatrooms
 
 
@@ -121,6 +111,50 @@ class CrudMethods {
 
 
 	// function to save messages in chatroom collection
+	Future saveMessage(String message, String uid, String chatroom)async {
+		DocumentReference doc = await db
+				.collection("chatrooms").document(chatroom);
+		DocumentSnapshot messages = await doc.get();
+
+		if(messages.exists){
+			Map chatData = messages.data;
+			int k = chatData.keys.length + 1;
+			if(k <= chatSize) {              // message history will be of 5 messages
+				doc.updateData({
+					k.toString(): {
+						"text": message,
+						"sender": uid,
+						"time": DateTime.now(),
+					},
+				});
+			}
+			else{                     // when total messages exceed out storage count
+				var newChatData = new Map<String, dynamic>();
+				chatData.forEach((key, value) {
+					var temp = int.parse(key) - 1;
+					if(temp > 0) {
+						newChatData[temp.toString()] = value;
+					}
+				});
+				newChatData[chatSize.toString()] = {
+					"text": message,
+					"sender": uid,
+					"time": DateTime.now(),
+				};
+				await doc.setData(newChatData);
+			}
+		}
+		else{
+			await doc.setData({
+				"1":{
+					"text": message,
+					"sender": uid,
+					"time": DateTime.now(),
+				},
+			});
+		}
+	}
+
 
 
 }
