@@ -7,7 +7,7 @@ class CrudMethods {
 
 	final db = Firestore.instance;
 	final FirebaseAuth _auth = FirebaseAuth.instance;
-	final chatSize = 5;           // limit of messages we want to store in db
+	final chatSize = 10;           // limit of messages we want to store in db
 
 	bool isLoggedIn(){
 		return FirebaseAuth.instance.currentUser() == null ? false : true;
@@ -104,12 +104,6 @@ class CrudMethods {
 	// functions to create chatrooms
 
 
-	// create function to retrive messages form school chatroom
-
-
-	// create function to retrive messages from college chatroom
-
-
 	// function to save messages in chatroom collection
 	Future saveMessage(String message, String uid, String chatroom)async {
 		DocumentReference doc = await db
@@ -155,6 +149,11 @@ class CrudMethods {
 		}
 	}
 
+	// stream to listen and update the messages
 
+	Stream<DocumentSnapshot> textMessages(String chatRoomId) {
+		DocumentReference doc = db.collection("chatrooms").document(chatRoomId);
+		return doc.snapshots();
+	}
 
 }
