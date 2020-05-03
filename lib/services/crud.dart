@@ -153,7 +153,6 @@ class CrudMethods {
 
 	Stream<DocumentSnapshot> textMessages(chatRoomid) {
 		DocumentReference doc = db.collection("chatrooms").document(chatRoomid);
-
 		return doc.snapshots();
 	}
 

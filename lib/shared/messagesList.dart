@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +14,12 @@ class _messageListState extends State<messageList> {
 	@override
   Widget build(BuildContext context) {
 
-		final messages = Provider.of<DocumentSnapshot>(context);
+		dynamic messages = Provider.of<DocumentSnapshot>(context);
+
+
 		var message_list = [];
 		messages.data.forEach((key, value) {message_list.add(value["text"]); });
-    print(messages);
+		print(messages);
 		return ListView.builder(
 			itemCount: message_list.length,
 			itemBuilder: (context, index) {

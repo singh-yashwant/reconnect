@@ -15,8 +15,11 @@ class messageBox extends StatefulWidget {
 }
 
 class _messageBoxState extends State<messageBox> {
+
   @override
   Widget build(BuildContext context) {
+//  	print("\n\n*********rebuilding********\n\n");
+//  	print(widget.message + "\n");
     return Container(
 			child: Row(
 				children: <Widget>[
@@ -36,7 +39,11 @@ class _messageBoxState extends State<messageBox> {
 								color: Colors.grey,
 							),
 							onPressed: (){
-								CrudMethods().saveMessage(widget.message, widget.uid, widget.chatroomId);
+								if(widget.message != null && widget.message.length > 0) {
+									CrudMethods().saveMessage(
+											widget.message, widget.uid, widget.chatroomId);
+									build(context);
+								}
 							},
 						),
 					),
