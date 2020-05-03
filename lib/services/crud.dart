@@ -151,8 +151,9 @@ class CrudMethods {
 
 	// stream to listen and update the messages
 
-	Stream<DocumentSnapshot> textMessages(String chatRoomId) {
-		DocumentReference doc = db.collection("chatrooms").document(chatRoomId);
+	Stream<DocumentSnapshot> textMessages(chatRoomid) {
+		DocumentReference doc = db.collection("chatrooms").document(chatRoomid);
+
 		return doc.snapshots();
 	}
 

@@ -15,7 +15,6 @@ class chatMessages extends StatelessWidget {
 			value:CrudMethods().textMessages(chatRoomId),
       child: Container(
 			height: MediaQuery.of(context).size.height * 0.8,
-//			child: Text("Here the scrollale chat messages will show"),
 			child: messageList(),
 		),
     );
