@@ -45,31 +45,7 @@ class _CollegeChatRoomState extends State<CollegeChatRoom> {
 			body: Column(
 				children: <Widget>[
 					chatMessages(_collegeChatroom),
-//					messageBox(message, _uid, _collegeChatroom),
-					Row(
-						children: <Widget>[
-							Container(
-								width: MediaQuery.of(context).size.width * 0.8,
-								child: TextFormField(
-									decoration: textInputDecoration.copyWith(hintText: "type your message"),
-									onChanged: (val) {message = val;},
-								),
-							),
-							Container(
-								width: MediaQuery.of(context).size.width *0.2,
-								child: FlatButton.icon(
-									label: Text(""),
-									icon: Icon(
-										Icons.send,
-										color: Colors.grey,
-									),
-									onPressed: (){
-										_crud.saveMessage(message, _uid, _collegeChatroom);
-									},
-								),
-							),
-						],
-					),
+					messageBox(message, _uid, _collegeChatroom),
 				],
 			),
 			drawer: NavDrawer(),

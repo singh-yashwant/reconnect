@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reconnect/services/crud.dart';
 import 'package:reconnect/shared/chatMessages.dart';
 import 'package:reconnect/shared/constants.dart';
+import 'package:reconnect/shared/messageBox.dart';
 import 'package:reconnect/shared/navbar.dart';
 
 class SchoolChatRoom extends StatefulWidget {
@@ -44,31 +45,7 @@ class _SchoolChatRoomState extends State<SchoolChatRoom> {
 			body: Column(
 				children: <Widget>[
 					chatMessages(_schoolChatroom),
-//					messageBox(message, _uid, _collegeChatroom),
-					Row(
-						children: <Widget>[
-							Container(
-								width: MediaQuery.of(context).size.width * 0.8,
-								child: TextFormField(
-									decoration: textInputDecoration.copyWith(hintText: "type your message"),
-									onChanged: (val) {message = val;},
-								),
-							),
-							Container(
-								width: MediaQuery.of(context).size.width *0.2,
-								child: FlatButton.icon(
-									label: Text(""),
-									icon: Icon(
-										Icons.send,
-										color: Colors.grey,
-									),
-									onPressed: (){
-										_crud.saveMessage(message, _uid, _schoolChatroom);
-									},
-								),
-							),
-						],
-					),
+					messageBox(message, _uid, _schoolChatroom),
 				],
 			),
 			drawer: NavDrawer(),
