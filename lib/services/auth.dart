@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:reconnect/models/user_model.dart';
 import 'package:reconnect/services/crud.dart';
@@ -33,9 +34,11 @@ class AuthService {
 
 	// singIn email and password
 	Future signInWithEmailAndPassword(String email, String password) async{
+
 		try{
 			AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
 			FirebaseUser user = result.user;
+
 			return _userFromFirebaseUser(user);
 		}catch(e){
 			print(e.toString());
@@ -67,6 +70,7 @@ class AuthService {
 	// sign out
 	Future signOut() async {
 		try{
+
 			return await _auth.signOut();
 		}
 		catch(e){
@@ -74,5 +78,6 @@ class AuthService {
 			return null;
 		}
 	}
+
 
 }
