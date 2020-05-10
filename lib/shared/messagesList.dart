@@ -16,7 +16,6 @@ class _messageListState extends State<messageList> {
 
 		dynamic messages = Provider.of<DocumentSnapshot>(context);
 
-
 		var message_list = [];
 		messages.data.forEach((key, value) {message_list.add(value["text"]); });
 		print(messages);
