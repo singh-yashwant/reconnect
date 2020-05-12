@@ -109,7 +109,8 @@ class CrudMethods {
 		DocumentReference doc = await db
 				.collection("chatrooms").document(chatroom);
 		DocumentSnapshot messages = await doc.get();
-
+		DateTime date = DateTime.now();
+//		String d = DateFormat("H:m:s").format(now)
 		if(messages.exists){
 			Map chatData = messages.data;
 			int k = chatData.keys.length + 1;
@@ -118,7 +119,7 @@ class CrudMethods {
 					k.toString(): {
 						"text": message,
 						"sender": uid,
-						"time": DateTime.now(),
+						"time": date,
 					},
 				});
 			}
@@ -133,7 +134,7 @@ class CrudMethods {
 				newChatData[chatSize.toString()] = {
 					"text": message,
 					"sender": uid,
-					"time": DateTime.now(),
+					"time": date,
 				};
 				await doc.setData(newChatData);
 			}

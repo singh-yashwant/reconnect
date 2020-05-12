@@ -10,10 +10,12 @@ class MessageTile extends StatelessWidget {
 	String text;
 	bool color;
 	Color c = Colors.grey;
+	String time;
 
-	MessageTile(String text, bool color){
-		this.text = text;
-		this.color = color;
+	MessageTile(List message){
+		this.text = message[0];
+		this.color = message[1];
+		this.time = message[2];
 		if(color){
 			c = Colors.white;
 		}
@@ -30,7 +32,7 @@ class MessageTile extends StatelessWidget {
 				margin: EdgeInsets.fromLTRB(3, 0, 3, 0),
 				child: ListTile(
 					title: Text(text),
-					subtitle: Text("send time"),
+					subtitle: Text(time),
 				),
 			),
 		);
@@ -70,21 +72,24 @@ class _messageListState extends State<messageList> {
 		final messages = Provider.of<QuerySnapshot>(context);
 		for(var doc in messages.documents){
 			if(doc.documentID == widget.chatRoomId) {
+//				print(doc.data);
 				doc.data.forEach((key, value) {
+					String sendTime = value['time'].toDate().toString().substring(0, 16);
 					if(value['sender'] == widget.currentUserUid) {
-						message_list.add([value["text"], true]);
+						message_list.add([value["text"], true, sendTime]);
 					}
 					else{
-						message_list.add([value["text"], false]);
+						message_list.add([value["text"], false, sendTime]);
 					}
 				});
 			}
 		}
 		print(message_list);
+		print(message_list.runtimeType);
 		return ListView.builder(
 			itemCount: message_list.length,
 			itemBuilder: (context, index) {
-				return MessageTile(message_list[index][0], message_list[index][1]);
+				return MessageTile(message_list[index]);
 			},
 		);
 

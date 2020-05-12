@@ -24,7 +24,7 @@ class _CollegeChatRoomState extends State<CollegeChatRoom> {
 	Future preporcessing() async{
 		_uid = await _crud.getUid();
 		_userDetails = await _crud.getUserDetails(_uid);
-		_collegeChatroom = _userDetails['school'] + _userDetails['school_batch'];
+		_collegeChatroom = _userDetails['college'] + _userDetails['college_batch'];
 	}
 
   @override
