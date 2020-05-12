@@ -156,4 +156,10 @@ class CrudMethods {
 		return doc.snapshots();
 	}
 
+
+	Stream<QuerySnapshot> get msgs {
+		CollectionReference col = db.collection("chatrooms");
+		return col.snapshots();
+	}
+
 }

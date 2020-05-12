@@ -4,7 +4,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+class MessageTile extends StatelessWidget {
+	@override
+
+	String text;
+	bool color;
+	Color c = Colors.grey;
+
+	MessageTile(String text, bool color){
+		this.text = text;
+		this.color = color;
+		if(color){
+			c = Colors.white;
+		}
+		else{
+			c = Colors.grey;
+		}
+	}
+
+	Widget build(BuildContext context) {
+		return Padding(
+			padding: EdgeInsets.only(top: 5, left: 5),
+			child: Card(
+				color: c,
+				margin: EdgeInsets.fromLTRB(3, 0, 3, 0),
+				child: ListTile(
+					title: Text(text),
+					subtitle: Text("send time"),
+				),
+			),
+		);
+	}
+}
+
+
 class messageList extends StatefulWidget {
+
+	final chatRoomId;
+	final currentUserUid;
+	messageList(this.chatRoomId, this.currentUserUid);
+
   @override
   _messageListState createState() => _messageListState();
 }
@@ -14,38 +53,40 @@ class _messageListState extends State<messageList> {
 	@override
   Widget build(BuildContext context) {
 
-		dynamic messages = Provider.of<DocumentSnapshot>(context);
+//		dynamic messages = Provider.of<DocumentSnapshot>(context);
+//
+//
+//		var message_list = [];
+//		messages.data.forEach((key, value) {message_list.add(value["text"]); });
+//		print(messages);
+//		return ListView.builder(
+//			itemCount: message_list.length,
+//			itemBuilder: (context, index) {
+//				return MessageTile(text: message_list[index]);
+//			},
+//		);
 
 		var message_list = [];
-		messages.data.forEach((key, value) {message_list.add(value["text"]); });
-		print(messages);
+		final messages = Provider.of<QuerySnapshot>(context);
+		for(var doc in messages.documents){
+			if(doc.documentID == widget.chatRoomId) {
+				doc.data.forEach((key, value) {
+					if(value['sender'] == widget.currentUserUid) {
+						message_list.add([value["text"], true]);
+					}
+					else{
+						message_list.add([value["text"], false]);
+					}
+				});
+			}
+		}
+		print(message_list);
 		return ListView.builder(
 			itemCount: message_list.length,
 			itemBuilder: (context, index) {
-				return MessageTile(text: message_list[index]);
+				return MessageTile(message_list[index][0], message_list[index][1]);
 			},
 		);
 
-  }
-}
-
-
-class MessageTile extends StatelessWidget {
-  @override
-
-	final String text;
-	MessageTile({this.text});
-
-  Widget build(BuildContext context) {
-    return Padding(
-			padding: EdgeInsets.only(top: 5, left: 5),
-			child: Card(
-				margin: EdgeInsets.fromLTRB(3, 3, 3, 3),
-				child: ListTile(
-					title: Text(text),
-					subtitle: Text("send time"),
-				),
-			),
-		);
   }
 }
