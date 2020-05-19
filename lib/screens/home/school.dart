@@ -44,7 +44,7 @@ class _SchoolChatRoomState extends State<SchoolChatRoom> {
 			),
 			body: Column(
 				children: <Widget>[
-					chatMessages(_schoolChatroom),
+					chatMessages(_schoolChatroom, _uid),
 					messageBox(message, _uid, _schoolChatroom),
 				],
 			),

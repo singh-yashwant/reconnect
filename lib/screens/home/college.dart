@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reconnect/services/crud.dart';
@@ -19,15 +21,16 @@ class _CollegeChatRoomState extends State<CollegeChatRoom> {
 	String _collegeChatroom;   // rn college name is not there in the db, so using school
 	String message;
 
-	preporcessing() async{
+	Future preporcessing() async{
 		_uid = await _crud.getUid();
 		_userDetails = await _crud.getUserDetails(_uid);
-		_collegeChatroom = _userDetails['school'] + _userDetails['school_batch'];
+		_collegeChatroom = _userDetails['college'] + _userDetails['college_batch'];
 	}
 
   @override
   Widget build(BuildContext context) {
-    preporcessing();
+		preporcessing();
+		print(_userDetails);
 		return Scaffold(
 			appBar: AppBar(
 				backgroundColor: Colors.brown[400],
@@ -44,7 +47,7 @@ class _CollegeChatRoomState extends State<CollegeChatRoom> {
 			),
 			body: Column(
 				children: <Widget>[
-					chatMessages(_collegeChatroom),
+					chatMessages(_collegeChatroom, _uid),
 					messageBox(message, _uid, _collegeChatroom),
 				],
 			),
