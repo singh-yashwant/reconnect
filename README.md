@@ -29,6 +29,6 @@ of graduation.
 </div>
 <br>
 <div>
-<img src="https://github.com/singh-yashwant/reconnect/blob/chatui/lib/assets/images/chat1.jpeg" width=200 height=400>
-<img src="https://github.com/singh-yashwant/reconnect/blob/chatui/lib/assets/images/chat2.jpeg" width=200 height=400>
+<img src="https://github.com/singh-yashwant/reconnect/blob/develop/lib/assets/images/chat1.jpeg" width=200 height=400>
+<img src="https://github.com/singh-yashwant/reconnect/blob/develop/lib/assets/images/chat2.jpeg" width=200 height=400>
 </div>
