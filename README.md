@@ -27,3 +27,8 @@ of graduation.
 <img src="https://github.com/singh-yashwant/reconnect/blob/chatui/lib/assets/images/home.jpeg" width=200 height=400>
 <img src="https://github.com/singh-yashwant/reconnect/blob/chatui/lib/assets/images/drawer.jpeg" width=200 height=400>
 </div>
+<br>
+<div>
+<img src="https://github.com/singh-yashwant/reconnect/blob/chatui/lib/assets/images/chat1.jpeg" width=200 height=400>
+<img src="https://github.com/singh-yashwant/reconnect/blob/chatui/lib/assets/images/chat2.jpeg" width=200 height=400>
+</div>
